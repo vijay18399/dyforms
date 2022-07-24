@@ -1,0 +1,38 @@
+<div class="container">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-card *ngIf="!loading" class="title-card">
+    <h1>{{form.name }}</h1>
+    <div *ngIf="message!=''" class="message">{{message}}</div>
+    <div (click)="sendAnother()" class="blue-text" *ngIf="message!=''">Submit Another Response</div>
+  </mat-card>
+  <ng-container *ngIf="message==''">
+    <mat-card class="field-card">
+      <div class="field">
+        <mat-form-field class="form-field" appearance="fill">
+          <input [(ngModel)]="formTemplate.from" matInput placeholder="Your Name" value="Question">
+        </mat-form-field>
+      </div>
+    </mat-card>
+    <mat-card *ngFor="let ft of formTemplate.values" class="field-card">
+      <div class="field">
+        <h4 class="field-label">{{ft.label}}</h4>
+        <mat-form-field *ngIf="ft.data_type=='TEXT'" class="form-field" appearance="fill">
+          <input [(ngModel)]="ft.value" matInput placeholder="Your Answer" value="Question">
+        </mat-form-field>
+        <mat-form-field *ngIf="ft.data_type=='LONGTEXT'" class="form-field" appearance="fill">
+          <textarea [(ngModel)]="ft.value" matInput placeholder="Your Answer"></textarea>
+        </mat-form-field>
+        <mat-radio-group *ngIf="ft.data_type=='RADIO'" class="example-radio-group" [(ngModel)]="ft.value">
+          <mat-radio-button class="example-radio-button" *ngFor="let fieldOption of ft.fieldOptions"
+            [value]="fieldOption.label">
+            {{fieldOption.label}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <div class="buttons">
+    <button (click)="sendResponse()" color="primary" mat-raised-button>Submit</button>
+  </div>
+</div>

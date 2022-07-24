@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-card class="title-card">
+    <div class="title">
+      <div class="text">
+        {{formName }}
+        <span>{{ responses.length }} Responses </span>
+      </div>
+
+      <div class="buttons">
+        <i (click)="getResponses(formId)" [ngClass]="loading ? 'fa-spin' : ''" class="fa fa-refresh "
+          style="font-size:24px"></i>
+        <mat-icon *ngIf="responses.length!=0" (click)="deleteDialog('all')">delete</mat-icon>
+      </div>
+    </div>
+
+  </mat-card>
+  <div *ngIf="!loading" class="full-width">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let x of responses">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span>Response From :- </span> {{x.from}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{x.createdAt | date }}
+          </mat-panel-description>
+
+        </mat-expansion-panel-header>
+        <div class="response" *ngFor="let y of x.values">
+          <b> {{y.field.label}} </b>
+          <mat-chip-list>
+            <mat-chip color="primary">{{y.value}}</mat-chip>
+          </mat-chip-list>
+        </div>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="deleteDialog(x.id)">Delete</button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div [formGroup]="form" class="container">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <mat-card *ngIf="!editName" class="title-card">
+    <h1>{{form.value.name}}</h1>
+    <button mat-icon-button>
+      <mat-icon (click)="editFormName()" class="add-course-btn">edit</mat-icon>
+    </button>
+  </mat-card>
+  <mat-card *ngIf="editName" class="title-card">
+    <mat-form-field class="name-field" appearance="fill">
+      <input formControlName="name" matInput placeholder="Form Name" value="Question">
+    </mat-form-field>
+
+  </mat-card>
+  <ng-container formArrayName="fields">
+    <mat-card [formGroupName]="i" *ngFor="let fieldForm of fields.controls; let i = index" class="field-card">
+      <div class="field">
+        <mat-form-field class="form-field" appearance="fill">
+          <input formControlName="label" matInput placeholder="Question {{i+1}}" value="Question">
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <select (change)="onFieldTypeChange(i,$event)" formControlName="data_type" matNativeControl required>
+            <option value="RADIO">Multiple Choices</option>
+            <option value="TEXT">Short Answer</option>
+            <option value="LONGTEXT">Paragraph</option>
+          </select>
+        </mat-form-field>
+      </div>
+      <div formArrayName="fieldOptions" class="field-options">
+        <mat-list *ngIf="fieldOptions(i).controls.length!=0">
+          <mat-list-item [formGroupName]="j" *ngFor="let fieldOption of fieldOptions(i).controls; let j=index">
+            <mat-icon mat-list-icon>radio_button_unchecked</mat-icon>
+            <mat-form-field mat-line class="option-field" appearance="fill">
+              <input matInput formControlName="label" placeholder="Option  {{ j+1}}" value="">
+            </mat-form-field>
+            <mat-icon *ngIf="j!=0" mat-list>
+              <mat-icon (click)="removefieldOption(i,j)" class="add-course-btn">close</mat-icon>
+            </mat-icon>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>radio_button_unchecked</mat-icon>
+            <div (click)="addfieldOption(i)" mat-line>Add Option</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <mat-divider inset></mat-divider>
+      <mat-card-actions class="field-actions">
+        <button (click)="copyField(i)" mat-icon-button>
+          <mat-icon mat-list-icon>content_copy</mat-icon>
+        </button>
+        <button (click)="deleteField(i)" mat-icon-button>
+          <mat-icon mat-list-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+  <div class="buttons">
+    <button mat-mini-fab (click)="addField()">
+      <mat-icon class="add-course-btn">add</mat-icon>
+    </button>
+    <button [disabled]="fields.controls.length==0 || form.invalid" mat-mini-fab (click)="submit()">
+      <mat-icon class="add-course-btn">send</mat-icon>
+    </button>
+  </div>
+
+</div>

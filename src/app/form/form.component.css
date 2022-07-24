@@ -1,0 +1,60 @@
+.container {
+  min-height: 89vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f0ebf8;
+  flex-direction: column;
+}
+.title-card {
+  padding: 5px;
+  width: 85%;
+  margin: 10px;
+  border-top: 5px orangered solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.field-card {
+  padding: 5px;
+  width: 85%;
+  margin: 10px;
+  border-left: 5px #3f51b5 solid;
+}
+.field {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+h4.field-label {
+  margin: 10px;
+}
+.form-field {
+  width: 100%;
+  margin: 5px;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 85%;
+  margin: 10px;
+}
+.message {
+  padding: 10px;
+}
+.blue-text {
+  color: #3f51b5;
+}
